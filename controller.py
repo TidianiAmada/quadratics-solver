@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from sympy import sympify, lambdify, Symbol
-
-from newton_solver import newton_method_multi_variable
+from newton_solver import newton_method_with_hessian
 
 app = Flask(__name__)
 
@@ -17,10 +15,10 @@ def index():
             max_iterations = int(request.form.get("max_iterations"))
 
             # Solve using Newton's method
-            result = newton_method_multi_variable(
-                func_str=function,
+            result = newton_method_with_hessian(
+                func_str=[function],  # Function should be a list for consistency
                 variables=variables,
-                initial_guesses=initial_guesses,
+                initial_guess=initial_guesses,
                 tolerance=tolerance,
                 max_iterations=max_iterations,
             )
@@ -30,7 +28,6 @@ def index():
             return jsonify({"status": "error", "message": str(e)})
 
     return render_template("index.html")
-
 
 
 if __name__ == "__main__":
