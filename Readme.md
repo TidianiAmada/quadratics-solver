@@ -6,37 +6,34 @@ Ce projet est une application Flask qui implémente la **méthode de Newton pour
 
 ### Contexte
 La méthode de Newton pour plusieurs variables est une extension de la méthode de Newton classique à une dimension. Elle est utilisée pour résoudre des systèmes d'équations non linéaires sous la forme :
-
-\[
-\mathbf{F}(\mathbf{x}) = 0
-\]
+            𝐹(𝑥)=0
 
 où :
-- \( \mathbf{F} \) est un vecteur de fonctions non linéaires,
-- \( \mathbf{x} \) est le vecteur des variables inconnues.  
 
-La méthode repose sur une série d'itérations où la solution est mise à jour à l'aide de la matrice jacobienne (les dérivées partielles de \( \mathbf{F} \)) et, dans ce cas, du **Hessien**, qui représente les dérivées secondes.  
 
-### Fonctionnement de `newton_method_with_hessian`
+F est un vecteur de fonctions non linéaires,𝑥 est le vecteur des variables inconnues.
+La méthode repose sur une série d'itérations où la solution est mise à jour à l'aide de la matrice jacobienne (les dérivées partielles de 𝐹) et, dans ce cas, du Hessien, qui représente les dérivées secondes.
 
-#### Paramètres :
-1. **`func_str`** : La chaîne de caractères représentant la fonction ou le système d'équations à résoudre (par exemple, `"x**2 + y**2 - 4"`).
-2. **`variables`** : Une liste des noms des variables dans la fonction (par exemple, `["x", "y"]`).
-3. **`initial_guesses`** : Les valeurs initiales des variables (par exemple, `[1.0, 1.0]`).
-4. **`tolerance`** : La précision désirée pour l'arrêt des itérations (par défaut \( 10^{-7} \)).
-5. **`max_iterations`** : Le nombre maximal d'itérations autorisées pour éviter les boucles infinies.
+Fonctionnement de newton_method_with_hessian
+Paramètres :
+func_str : La chaîne de caractères représentant la fonction ou le système d'équations à résoudre (par exemple, "x**2 + y**2 - 4").
+variables : Une liste des noms des variables dans la fonction (par exemple, ["x", "y"]).
+initial_guesses : Les valeurs initiales des variables (par exemple, [1.0, 1.0]).
+tolerance : La précision désirée pour l'arrêt des itérations (par défaut 10−7).
+max_iterations : Le nombre maximal d'itérations autorisées pour éviter les boucles infinies.
+Étapes principales :
+Initialisation :
 
-#### Étapes principales :
-1. **Initialisation** :
-   - Les variables sont symbolisées à l'aide de `sympy`.
-   - La fonction, le gradient (vecteur des dérivées premières), et le Hessien (matrice des dérivées secondes) sont calculés symboliquement.
+Les variables sont symbolisées à l'aide de sympy.
+La fonction, le gradient (vecteur des dérivées premières), et le Hessien (matrice des dérivées secondes) sont calculés symboliquement.
+Itérations :
 
-2. **Itérations** :
-   - Calcul de la valeur actuelle de la fonction \( f(x) \), du gradient, et du Hessien.
-   - Résolution du système linéaire \( H \Delta x = -\nabla f(x) \) pour déterminer le pas de mise à jour \( \Delta x \).
-   - Mise à jour des variables : \( x_{\text{nouveau}} = x_{\text{actuel}} + \Delta x \).
-   - Vérification de la convergence : arrêt si la norme du gradient ou le changement relatif des variables est inférieur à la tolérance.
-
+Calcul de la valeur actuelle de la fonction 𝑓(𝑥)
+f(x), du gradient, et du Hessien.
+Résolution du système linéaire 𝐻Δ𝑥=−∇𝑓(𝑥)
+HΔx=−∇f(x) pour déterminer le pas de mise à jour Δ𝑥 Δx.
+Mise à jour des variables : 𝑥 nouveau =𝑥 actuel+Δ𝑥 .
+Vérification de la convergence : arrêt si la norme du gradient ou le changement relatif des variables est inférieur à la tolérance.
 3. **Résultats** :
    - Si la convergence est atteinte, la solution finale est retournée.
    - Sinon, un message d'erreur est généré si le nombre maximal d'itérations est dépassé.
